@@ -41,9 +41,7 @@ public class JafuApplication {
 	protected JafuApplication() {
 		this.initializer = context -> {
 			new MessageSourceInitializer().initialize(context);
-			context.registerBean(BeanDefinitionReaderUtils.uniqueBeanName(ObjectMapper.class.getSimpleName(), context)
-					, ObjectMapper.class
-					, new ObjectMapper());
+			context.registerBean("objectMapper", ObjectMapper.class, () -> new ObjectMapper());
 			/*context.registerBean(BeanDefinitionReaderUtils.uniqueBeanName(MappingJackson2HttpMessageConverter.class.getName(), context)
 					, MappingJackson2HttpMessageConverter.class
 					, new MappingJackson2HttpMessageConverter());*/
