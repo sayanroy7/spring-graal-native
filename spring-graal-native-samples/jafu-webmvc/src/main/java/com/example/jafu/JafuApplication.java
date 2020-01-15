@@ -23,6 +23,7 @@ import org.springframework.web.servlet.function.RouterFunction;
 import org.springframework.web.servlet.function.RouterFunctionDsl;
 
 import java.util.Arrays;
+import java.util.function.Supplier;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.http.MediaType.TEXT_PLAIN;
@@ -45,7 +46,8 @@ public class JafuApplication {
 		this.initializer = context -> {
 			new MessageSourceInitializer().initialize(context);
 			context.registerBean(BeanDefinitionReaderUtils.uniqueBeanName(MappingJackson2HttpMessageConverter.class.getName(), context)
-					, MappingJackson2HttpMessageConverter.class);
+					, MappingJackson2HttpMessageConverter.class
+					, (Supplier<MappingJackson2HttpMessageConverter>) MappingJackson2HttpMessageConverter::new);
 			context.registerBean(CommandLineRunner.class, () -> args -> System.out.println("jafu running!"));
 			/*context.registerBean(BeanDefinitionReaderUtils.uniqueBeanName(JafuApplicationController.class.getName(), context), RouterFunction.class, () ->
 				RouterFunctions.route().GET("/", request -> ServerResponse.ok().body("Hello")).build());*/
