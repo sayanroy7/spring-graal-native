@@ -22,6 +22,7 @@ import org.springframework.core.task.SimpleAsyncTaskExecutor;
 import org.springframework.http.converter.ByteArrayHttpMessageConverter;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.accept.ContentNegotiationManager;
 import org.springframework.web.bind.support.DefaultSessionAttributeStore;
 import org.springframework.web.bind.support.SessionAttributeStore;
@@ -94,6 +95,7 @@ final class Target_RequestMappingHandlerAdapter {
 		this.messageConverters = new ArrayList<>(2);
 		this.messageConverters.add(new ByteArrayHttpMessageConverter());
 		this.messageConverters.add(new StringHttpMessageConverter());
+		this.messageConverters.add(new MappingJackson2HttpMessageConverter());
 		this.logger = LogFactory.getLog(getClass());
 		this.contentNegotiationManager = new ContentNegotiationManager();
 		this.taskExecutor = new SimpleAsyncTaskExecutor("MvcAsync");

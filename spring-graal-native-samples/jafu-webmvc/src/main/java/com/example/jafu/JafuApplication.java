@@ -2,6 +2,9 @@ package com.example.jafu;
 
 import java.util.Arrays;
 
+import com.example.jafu.controller.JafuApplicationController;
+import com.example.jafu.controller.JafuApplicationRestController;
+import com.example.jafu.handler.JafuApplicationRestHandler;
 import org.springframework.beans.factory.support.BeanDefinitionReaderUtils;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -20,10 +23,16 @@ import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.GenericApplicationContext;
 import org.springframework.context.support.ServletWebServerApplicationContextWithoutSpel;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.servlet.function.RouterFunction;
 import org.springframework.web.servlet.function.RouterFunctionDsl;
 import org.springframework.web.servlet.function.RouterFunctions;
 import org.springframework.web.servlet.function.ServerResponse;
+
+import static org.springframework.http.MediaType.APPLICATION_JSON;
+import static org.springframework.http.MediaType.TEXT_PLAIN;
+import static org.springframework.web.servlet.function.RequestPredicates.accept;
+import static org.springframework.web.servlet.function.RouterFunctions.route;
 
 public class JafuApplication {
 
@@ -40,9 +49,30 @@ public class JafuApplication {
 	protected JafuApplication() {
 		this.initializer = context -> {
 			new MessageSourceInitializer().initialize(context);
+			context.registerBean(BeanDefinitionReaderUtils.uniqueBeanName(MappingJackson2HttpMessageConverter.class.getName(), context)
+					, MappingJackson2HttpMessageConverter.class);
 			context.registerBean(CommandLineRunner.class, () -> args -> System.out.println("jafu running!"));
-			context.registerBean(BeanDefinitionReaderUtils.uniqueBeanName(RouterFunctionDsl.class.getName(), context), RouterFunction.class, () ->
-				RouterFunctions.route().GET("/", request -> ServerResponse.ok().body("Hello")).build());
+			/*context.registerBean(BeanDefinitionReaderUtils.uniqueBeanName(JafuApplicationController.class.getName(), context), JafuApplicationController.class);
+			context.registerBean(BeanDefinitionReaderUtils.uniqueBeanName(JafuApplicationRestController.class.getName(), context), JafuApplicationRestController.class);*/
+
+
+
+
+			/*context.registerBean(BeanDefinitionReaderUtils.uniqueBeanName(JafuApplicationController.class.getName(), context), RouterFunction.class, () ->
+				RouterFunctions.route().GET("/", request -> ServerResponse.ok().body("Hello")).build());*/
+
+			JafuApplicationRestHandler handler = new JafuApplicationRestHandler();
+			context.registerBean(BeanDefinitionReaderUtils.uniqueBeanName(JafuApplicationController.class.getName(), context), RouterFunction.class, () ->
+					route()
+							.GET("/text", accept(TEXT_PLAIN), handler::getTextResponse)
+							.GET("/json", accept(APPLICATION_JSON), handler::getMessageJsonResponse)
+							.build());
+
+
+
+
+
+
 			serverProperties.setPort(8080);
 			new StringConverterInitializer().initialize(context);
 			new ResourceConverterInitializer().initialize(context);
