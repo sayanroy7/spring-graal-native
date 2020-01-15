@@ -181,5 +181,10 @@
     "name": "org.springframework.web.servlet.support.SessionFlashMapManager",
     "allDeclaredConstructors": true,
     "allDeclaredMethods": true
+  },
+  {
+    "name": "org.springframework.http.converter.json.MappingJackson2HttpMessageConverter",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true
   }
 ]
