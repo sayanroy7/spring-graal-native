@@ -1,14 +1,17 @@
-package com.example.jafu.handler;
+package sb.jafu.app.handler;
 
-import com.example.jafu.model.Message;
-import com.example.jafu.model.Metadata;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import sb.jafu.app.model.Message;
+import sb.jafu.app.model.Metadata;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.MediaType;
 import org.springframework.web.servlet.function.ServerRequest;
 import org.springframework.web.servlet.function.ServerResponse;
 
+import javax.servlet.ServletException;
+import java.io.IOException;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -19,6 +22,8 @@ import static org.springframework.web.servlet.function.ServerResponse.ok;
  * @author SAROY on 1/15/2020
  */
 public class JafuApplicationRestHandler {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(JafuApplicationRestHandler.class);
 
     private static final ObjectMapper MAPPER = new ObjectMapper();
 
@@ -47,6 +52,14 @@ public class JafuApplicationRestHandler {
 
 
         return ok().contentType(APPLICATION_JSON).body(message);
+    }
+
+    public ServerResponse postMessageJson(ServerRequest request) throws ServletException, IOException {
+        Message message = request.body(Message.class);
+        if (LOGGER.isInfoEnabled()) {
+            LOGGER.info("message received with id: {}", message.getId());
+        }
+        return ServerResponse.accepted().contentType(APPLICATION_JSON).body(message);
     }
 
 }

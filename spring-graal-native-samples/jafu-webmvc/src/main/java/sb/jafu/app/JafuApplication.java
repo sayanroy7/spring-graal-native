@@ -1,7 +1,6 @@
-package com.example.jafu;
+package sb.jafu.app;
 
-import com.example.jafu.handler.JafuApplicationRestHandler;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import sb.jafu.app.handler.JafuApplicationRestHandler;
 import org.springframework.beans.factory.support.BeanDefinitionReaderUtils;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -18,7 +17,6 @@ import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.GenericApplicationContext;
 import org.springframework.context.support.ServletWebServerApplicationContextWithoutSpel;
-import org.springframework.http.MediaType;
 import org.springframework.web.servlet.function.RouterFunction;
 import org.springframework.web.servlet.function.RouterFunctionDsl;
 
@@ -51,6 +49,7 @@ public class JafuApplication {
 					, () ->	route()
 							.GET("/text", accept(TEXT_PLAIN), handler::getTextResponse)
 							.GET("/json", accept(APPLICATION_JSON), handler::getMessageJsonResponse)
+							.POST("/json", accept(APPLICATION_JSON).and(contentType(APPLICATION_JSON)), handler::postMessageJson)
 							.build());
 
 			serverProperties.setPort(8080);
