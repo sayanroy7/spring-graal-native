@@ -44,25 +44,14 @@ public class JafuApplication {
 	protected JafuApplication() {
 		this.initializer = context -> {
 			new MessageSourceInitializer().initialize(context);
-			//context.registerBean("objectMapper", ObjectMapper.class, () -> new ObjectMapper());
-			/*context.registerBean(BeanDefinitionReaderUtils.uniqueBeanName(MappingJackson2HttpMessageConverter.class.getName(), context)
-					, MappingJackson2HttpMessageConverter.class
-					, new MappingJackson2HttpMessageConverter());*/
 			context.registerBean(CommandLineRunner.class, () -> args -> System.out.println("jafu running!"));
-			/*context.registerBean(BeanDefinitionReaderUtils.uniqueBeanName(JafuApplicationController.class.getName(), context), RouterFunction.class, () ->
-				RouterFunctions.route().GET("/", request -> ServerResponse.ok().body("Hello")).build());*/
 
 			JafuApplicationRestHandler handler = new JafuApplicationRestHandler();
 			context.registerBean(BeanDefinitionReaderUtils.uniqueBeanName(RouterFunctionDsl.class.getName(), context), RouterFunction.class
 					, () ->	route()
 							.GET("/text", accept(TEXT_PLAIN), handler::getTextResponse)
-							.GET("/json", all(), handler::getMessageJsonResponse)
+							.GET("/json", accept(APPLICATION_JSON), handler::getMessageJsonResponse)
 							.build());
-
-
-
-
-
 
 			serverProperties.setPort(8080);
 			new StringConverterInitializer().initialize(context);
