@@ -8,6 +8,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.context.MessageSourceInitializer;
 import org.springframework.boot.autoconfigure.http.HttpProperties;
+import org.springframework.boot.autoconfigure.jackson.JacksonInitializer;
+import org.springframework.boot.autoconfigure.jackson.JacksonProperties;
 import org.springframework.boot.autoconfigure.web.ResourceProperties;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.boot.autoconfigure.web.servlet.*;
@@ -16,6 +18,7 @@ import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.GenericApplicationContext;
 import org.springframework.context.support.ServletWebServerApplicationContextWithoutSpel;
+import org.springframework.http.MediaType;
 import org.springframework.web.servlet.function.RouterFunction;
 import org.springframework.web.servlet.function.RouterFunctionDsl;
 
@@ -23,7 +26,7 @@ import java.util.Arrays;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.http.MediaType.TEXT_PLAIN;
-import static org.springframework.web.servlet.function.RequestPredicates.accept;
+import static org.springframework.web.servlet.function.RequestPredicates.*;
 import static org.springframework.web.servlet.function.RouterFunctions.route;
 
 public class JafuApplication {
@@ -41,7 +44,7 @@ public class JafuApplication {
 	protected JafuApplication() {
 		this.initializer = context -> {
 			new MessageSourceInitializer().initialize(context);
-			context.registerBean("objectMapper", ObjectMapper.class, () -> new ObjectMapper());
+			//context.registerBean("objectMapper", ObjectMapper.class, () -> new ObjectMapper());
 			/*context.registerBean(BeanDefinitionReaderUtils.uniqueBeanName(MappingJackson2HttpMessageConverter.class.getName(), context)
 					, MappingJackson2HttpMessageConverter.class
 					, new MappingJackson2HttpMessageConverter());*/
@@ -53,7 +56,7 @@ public class JafuApplication {
 			context.registerBean(BeanDefinitionReaderUtils.uniqueBeanName(RouterFunctionDsl.class.getName(), context), RouterFunction.class
 					, () ->	route()
 							.GET("/text", accept(TEXT_PLAIN), handler::getTextResponse)
-							.GET("/json", accept(APPLICATION_JSON), handler::getMessageJsonResponse)
+							.GET("/json", all(), handler::getMessageJsonResponse)
 							.build());
 
 
@@ -64,6 +67,10 @@ public class JafuApplication {
 			serverProperties.setPort(8080);
 			new StringConverterInitializer().initialize(context);
 			new ResourceConverterInitializer().initialize(context);
+
+
+
+			new JacksonInitializer(new JacksonProperties()).initialize(context);
 			new JacksonJsonConverterInitializer().initialize(context);
 			new ServletWebServerInitializer(serverProperties, httpProperties, webMvcProperties, resourceProperties).initialize(context);
 		};
