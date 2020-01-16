@@ -183,8 +183,59 @@
     "allDeclaredMethods": true
   },
   {
+    "name": "com.fasterxml.jackson.databind.ObjectMapper",
+    "allDeclaredConstructors": true,
+    "allDeclaredFields": true,
+    "allPublicFields": true,
+    "allDeclaredMethods": true,
+    "allPublicMethods": true
+  },
+  {
     "name": "org.springframework.http.converter.HttpMessageConverter",
     "allDeclaredConstructors": true,
-    "allDeclaredMethods": true
+    "allDeclaredFields": true,
+    "allPublicFields": true,
+    "allDeclaredMethods": true,
+    "allPublicMethods": true
+  },
+  {
+    "name": "org.springframework.http.converter.json.Jackson2ObjectMapperBuilder",
+    "allDeclaredConstructors": true,
+    "allDeclaredFields": true,
+    "allPublicFields": true,
+    "allDeclaredMethods": true,
+    "allPublicMethods": true
+  },
+  {
+    "name": "org.springframework.http.converter.json.MappingJackson2HttpMessageConverter",
+    "allDeclaredConstructors": true,
+    "allDeclaredFields": true,
+    "allPublicFields": true,
+    "allDeclaredMethods": true,
+    "allPublicMethods": true
+  },
+  {
+    "name": "com.example.jafu.model.Message",
+    "allDeclaredConstructors": true,
+    "allDeclaredFields": true,
+    "allPublicFields": true,
+    "allDeclaredMethods": true,
+    "allPublicMethods": true
+  },
+  {
+    "name": "com.example.jafu.model.Metadata",
+    "allDeclaredConstructors": true,
+    "allDeclaredFields": true,
+    "allPublicFields": true,
+    "allDeclaredMethods": true,
+    "allPublicMethods": true
+  },
+  {
+  "name": "java.util.Map",
+  "allDeclaredConstructors": true,
+  "allDeclaredFields": true,
+  "allPublicFields": true,
+  "allDeclaredMethods": true,
+  "allPublicMethods": true
   }
 ]
