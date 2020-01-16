@@ -50,8 +50,8 @@ public class JafuApplication {
 				RouterFunctions.route().GET("/", request -> ServerResponse.ok().body("Hello")).build());*/
 
 			JafuApplicationRestHandler handler = new JafuApplicationRestHandler();
-			context.registerBean(BeanDefinitionReaderUtils.uniqueBeanName(RouterFunctionDsl.class.getName(), context), RouterFunction.class, () ->
-					route()
+			context.registerBean(BeanDefinitionReaderUtils.uniqueBeanName(RouterFunctionDsl.class.getName(), context), RouterFunction.class
+					, () ->	route()
 							.GET("/text", accept(TEXT_PLAIN), handler::getTextResponse)
 							.GET("/json", accept(APPLICATION_JSON), handler::getMessageJsonResponse)
 							.build());

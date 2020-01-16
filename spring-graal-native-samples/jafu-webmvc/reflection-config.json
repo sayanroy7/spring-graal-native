@@ -183,7 +183,7 @@
     "allDeclaredMethods": true
   },
   {
-    "name": "org.springframework.http.converter.json.MappingJackson2HttpMessageConverter",
+    "name": "org.springframework.boot.autoconfigure.http.HttpMessageConverters",
     "allDeclaredConstructors": true,
     "allDeclaredMethods": true
   }
