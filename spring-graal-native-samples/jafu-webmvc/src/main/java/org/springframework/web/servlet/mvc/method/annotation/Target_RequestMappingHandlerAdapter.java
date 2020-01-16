@@ -92,7 +92,7 @@ final class Target_RequestMappingHandlerAdapter {
 	@Substitute
 	public Target_RequestMappingHandlerAdapter() {
 		this.requestResponseBodyAdvice =  new ArrayList<>();
-		this.messageConverters = new ArrayList<>(2);
+		this.messageConverters = new ArrayList<>(10);
 		this.messageConverters.add(new ByteArrayHttpMessageConverter());
 		this.messageConverters.add(new StringHttpMessageConverter());
 		this.messageConverters.add(new MappingJackson2HttpMessageConverter());

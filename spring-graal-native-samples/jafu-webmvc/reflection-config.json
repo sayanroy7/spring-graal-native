@@ -183,7 +183,7 @@
     "allDeclaredMethods": true
   },
   {
-    "name": "org.springframework.boot.autoconfigure.http.HttpMessageConverters",
+    "name": "org.springframework.http.converter.HttpMessageConverter",
     "allDeclaredConstructors": true,
     "allDeclaredMethods": true
   }

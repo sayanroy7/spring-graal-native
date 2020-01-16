@@ -2,6 +2,8 @@ package com.example.jafu.handler;
 
 import com.example.jafu.model.Message;
 import com.example.jafu.model.Metadata;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.MediaType;
 import org.springframework.web.servlet.function.ServerRequest;
@@ -18,12 +20,14 @@ import static org.springframework.web.servlet.function.ServerResponse.ok;
  */
 public class JafuApplicationRestHandler {
 
+    private static final ObjectMapper MAPPER = new ObjectMapper();
+
     public ServerResponse getTextResponse(ServerRequest request) {
         String textPlain = "This is text/plain message from Jafu RestHandler which is similar to @RestController";
         return ok().contentType(MediaType.TEXT_PLAIN).body(textPlain);
     }
 
-    public ServerResponse getMessageJsonResponse(ServerRequest request) {
+    public ServerResponse getMessageJsonResponse(ServerRequest request) throws JsonProcessingException {
         Message message = new Message();
         message.setId("message1");
         message.setSerial(1234567);
@@ -41,7 +45,8 @@ public class JafuApplicationRestHandler {
         props.put("status", "approved");
         message.setProperties(props);
 
-        return ok().contentType(APPLICATION_JSON).body(message, ParameterizedTypeReference.forType(Message.class));
+
+        return ok().contentType(APPLICATION_JSON).body(MAPPER.writeValueAsString(message));
     }
 
 }

@@ -5,6 +5,7 @@ import java.util.Map;
 /**
  * @author SAROY on 1/15/2020
  */
+
 public class Message {
 
     private String id;

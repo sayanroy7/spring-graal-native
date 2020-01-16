@@ -68,8 +68,6 @@ public class JafuApplication {
 			new StringConverterInitializer().initialize(context);
 			new ResourceConverterInitializer().initialize(context);
 
-
-
 			new JacksonInitializer(new JacksonProperties()).initialize(context);
 			new JacksonJsonConverterInitializer().initialize(context);
 			new ServletWebServerInitializer(serverProperties, httpProperties, webMvcProperties, resourceProperties).initialize(context);
