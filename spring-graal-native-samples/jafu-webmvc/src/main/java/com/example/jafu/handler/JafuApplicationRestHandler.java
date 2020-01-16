@@ -46,7 +46,7 @@ public class JafuApplicationRestHandler {
         message.setProperties(props);
 
 
-        return ok().contentType(APPLICATION_JSON).body(MAPPER.writeValueAsString(message));
+        return ok().contentType(APPLICATION_JSON).body("{\"message\": \"This is JSON from Graal native image\"}");
     }
 
 }
