@@ -229,13 +229,5 @@
     "allPublicFields": true,
     "allDeclaredMethods": true,
     "allPublicMethods": true
-  },
-  {
-  "name": "java.util.Map",
-  "allDeclaredConstructors": true,
-  "allDeclaredFields": true,
-  "allPublicFields": true,
-  "allDeclaredMethods": true,
-  "allPublicMethods": true
   }
 ]
